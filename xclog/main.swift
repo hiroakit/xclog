@@ -11,6 +11,14 @@
 import Foundation
 import Cocoa
 
+var arguments = CommandLine.arguments.suffix(from: 1)
+if (arguments.contains("-v") || arguments.contains("--version")) {
+    let exePath: URL = URL.init(fileURLWithPath: CommandLine.arguments[0])
+    let productName: String = exePath.lastPathComponent
+    print("\(productName) version 0.0.1")
+    exit(EXIT_SUCCESS)
+}
+
 let standardInput = FileHandle.standardInput
 let standardOutput = FileHandle.standardOutput
 let parser: Parser = Parser()

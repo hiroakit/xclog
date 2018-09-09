@@ -89,12 +89,20 @@ class Parser {
             result = self.formatter.formatAnalyzeTarget(target: groups[0], project: groups[1], configuration: groups[2])
         }
         else if isMatch(text: text, pattern: Pattern.codeSign) {
-            let groups = text.capturedGroups(withRegex: Pattern.codeSign)
-            guard groups.count > 0 else {
+            guard let regex = try? NSRegularExpression(pattern: Pattern.filename, options: []) else {
                 return result
             }
-
-            result = self.formatter.formatCodeSign(fileName: groups[0])
+            
+            let matches = regex.matches(in: text,
+                                        options: [],
+                                        range: NSRange(location:0, length: text.lengthOfBytes(using: .utf8)))
+            guard let match = matches.first else {
+                return result
+            }
+            
+            let matchedString = text[text.index(text.startIndex, offsetBy: match.range.location)...]
+            let fileName = String(matchedString)
+            result = self.formatter.formatCodeSign(fileName: fileName)
         }
         else if isMatch(text: text, pattern: Pattern.codeSignFramework) {
             let groups = text.capturedGroups(withRegex: Pattern.codeSignFramework)

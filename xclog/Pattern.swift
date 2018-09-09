@@ -10,7 +10,21 @@
 
 import Foundation
 
+/// Regular Expression Pattern for Xcode build log
 class Pattern {
+    
+    /// Get file name from file path
+    ///
+    /// - Note:
+    /// ```
+    /// Signing /Users/your/Library/Developer/Xcode/DerivedData/myTV-abc/Build/Intermediates.noindex/ArchiveIntermediates/myTV/IntermediateBuildFilesPath/UninstalledProducts/appletvos/myTV_TopShelf.appex
+    /// ```
+    /// ↓↓↓
+    /// ```
+    /// myTV_TopShelf.appex
+    /// ```
+    static let filename             = "([^\\/]*)$"
+    
     static let analyzeTarget        = "^=== ANALYZE TARGET\\s(.*)\\sOF PROJECT\\s(.*)\\sWITH.*CONFIGURATION\\s(.*)\\s==="
     static let buildTarget          = "^=== BUILD TARGET\\s(.*)\\sOF PROJECT\\s(.*)\\sWITH.*CONFIGURATION\\s(.*)\\s==="
     static let cleanTarget          = "^=== CLEAN TARGET\\s(.*)\\sOF PROJECT\\s(.*)\\sWITH CONFIGURATION\\s(.*)\\s==="
